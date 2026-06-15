@@ -8,7 +8,7 @@ interface ExportOptions<T> {
   headers?: Record<keyof T, string>;
 }
 
-export function exportToExcel<T extends Record<string, unknown>>({
+export function exportToExcel<T extends object>({
   data,
   fileName,
   sheetName = "Hoja1",
@@ -17,7 +17,7 @@ export function exportToExcel<T extends Record<string, unknown>>({
   const exportData = headers
     ? data.map((row) =>
         Object.fromEntries(
-          Object.entries(headers).map(([key, label]) => [label, row[key]])
+          Object.entries(headers).map(([key, label]) => [label, (row as Record<string, unknown>)[key]])
         )
       )
     : data;

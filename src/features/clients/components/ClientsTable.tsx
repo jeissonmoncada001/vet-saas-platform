@@ -158,7 +158,7 @@ export function ClientsTable({ clients, onEdit, onDelete }: ClientsTableProps) {
           className="max-w-sm"
         />
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger>
             <Button variant="outline" size="sm">
               <Download className="size-4 mr-2" />
               Exportar

@@ -32,20 +32,18 @@ export function UserMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 w-full rounded-md p-2 hover:bg-sidebar-accent transition-colors">
-          <Avatar className="size-8">
-            <AvatarFallback>{initials}</AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col items-start text-sm">
-            <span className="font-medium truncate max-w-[140px]">
-              {profile?.nombre ?? "Usuario"}
-            </span>
-            <span className="text-xs text-muted-foreground capitalize">
-              {profile?.rol ?? ""}
-            </span>
-          </div>
-        </button>
+      <DropdownMenuTrigger className="flex items-center gap-2 w-full rounded-md p-2 hover:bg-sidebar-accent transition-colors outline-none">
+        <Avatar className="size-8">
+          <AvatarFallback>{initials}</AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col items-start text-sm">
+          <span className="font-medium truncate max-w-[140px]">
+            {profile?.nombre ?? "Usuario"}
+          </span>
+          <span className="text-xs text-muted-foreground capitalize">
+            {profile?.rol ?? ""}
+          </span>
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem>
