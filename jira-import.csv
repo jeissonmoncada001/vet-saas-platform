@@ -1,0 +1,165 @@
+Summary,Issue Type,Priority,Description,Labels
+[EPIC] Administración del sistema,Epic,Highest,"CRUD completo para gestión de la clínica: usuarios, roles, configuración y accesos.",admin
+[ADM] Crear tipos y schema Zod para perfiles de usuario,Task,Highest,"Interfaz Profile con campos: id, clinic_id, nombre, email, rol (admin/veterinario/recepcionista/auxiliar), activo.",admin backend
+[ADM] Crear servicio profiles.service.ts,Task,Highest,"getProfiles, getProfileById, createProfile, updateProfile, deactivateProfile usando Supabase client.",admin backend
+[ADM] Server actions para usuarios,Task,Highest,"createUserAction (crea en Supabase Auth + inserta en profiles), updateProfileAction, deactivateUserAction con revalidatePath.",admin backend
+[ADM] Hook useCurrentProfile,Task,High,"Hook client-side que carga el perfil del usuario autenticado y lo persiste en Zustand al iniciar sesión.",admin frontend
+[ADM] Tabla de usuarios con roles,Task,High,"UsersTable con TanStack Table: columnas nombre, email, rol, estado activo/inactivo. Búsqueda y filtro por rol.",admin frontend
+[ADM] Formulario crear usuario,Task,High,"UserForm para crear: nombre, email, rol (select), contraseña temporal. Validación con Zod.",admin frontend
+[ADM] Formulario editar usuario,Task,High,"UserForm para editar: nombre, rol. No permite cambiar email. Opción de resetear contraseña.",admin frontend
+[ADM] Dialog confirmar desactivación de usuario,Task,Medium,"Alerta antes de desactivar con mensaje de impacto en citas y registros asignados.",admin frontend
+[ADM] Middleware de permisos por rol,Task,Highest,"Función checkPermission(role, module, action): define acceso por rol. Redirige si no autorizado.",admin seguridad
+[ADM] HOC withRoleGuard para páginas,Task,High,"Higher-order component que valida el rol antes de renderizar. Redirige a /unauthorized si no tiene acceso.",admin seguridad
+[ADM] Hook usePermissions para UI,Task,High,"Hook: canCreate, canEdit, canDelete, canExport por módulo. Oculta botones según rol automáticamente.",admin frontend
+[ADM] Página de perfil propio /profile,Task,Medium,"Ver y editar nombre propio, cambiar contraseña. Foto de perfil con upload a Storage.",admin frontend
+[ADM] Página /users (solo admin),Task,Medium,"Vista completa de gestión de usuarios con tabla, crear, editar, desactivar.",admin frontend
+[ADM] Tests de permisos por rol,Task,Medium,"Tests unitarios para checkPermission con todos los roles y módulos del sistema.",admin testing
+[EPIC] Registro de Clientes,Epic,Highest,"CRUD completo para propietarios de mascotas con vista detalle y exportación.",clientes
+[CLI] Crear tipos y schema Zod para clientes,Task,Highest,"Interfaz Client: id, clinic_id, nombre, documento, telefono, email, direccion, created_at. Schema de validación.",clientes backend
+[CLI] Crear servicio clients.service.ts,Task,Highest,"getClients, getClientById, searchClients, createClient, updateClient, deleteClient con Supabase.",clientes backend
+[CLI] Server actions para clientes,Task,Highest,"createClientAction, updateClientAction, deleteClientAction con revalidatePath /clients.",clientes backend
+[CLI] Hook useClients con búsqueda,Task,High,"Hook con estado loading, error, refetch. Filtro por nombre, documento y teléfono.",clientes frontend
+[CLI] Tabla ClientsTable con TanStack Table,Task,High,"Columnas: nombre, documento, teléfono, email, mascotas (count), registrado. Búsqueda global, ordenamiento, paginación 15 por página.",clientes frontend
+[CLI] Selección múltiple de filas,Task,Medium,"Checkbox por fila y seleccionar todo. Estado de selección para exportación parcial.",clientes frontend
+[CLI] Formulario ClientForm,Task,High,"Campos: nombre completo, documento, teléfono, email, dirección. Validación Zod + React Hook Form.",clientes frontend
+[CLI] Dialog crear/editar cliente,Task,High,"ClientDialog reutilizable para crear y editar con ClientForm interno. Toast de éxito/error.",clientes frontend
+[CLI] Dialog confirmar eliminación,Task,High,"DeleteClientDialog: advertencia de eliminación en cascada de mascotas e historias clínicas.",clientes frontend
+[CLI] Vista detalle de cliente /clients/[id],Task,High,"ClientDetailView: datos personales, lista de mascotas del cliente, historial de facturas, botón nueva cita.",clientes frontend
+[CLI] Exportación Excel: todos filtrados seleccionados,Task,Medium,"Dropdown exportar: todos los registros, filtrados o seleccionados. Archivo con headers profesionales.",clientes frontend
+[CLI] Tests unitarios schema de cliente,Task,Low,"Tests para validaciones del schema: email vacío permitido, documento mínimo, teléfono mínimo.",clientes testing
+[EPIC] Registro de Mascotas,Epic,Highest,"CRUD completo para mascotas vinculadas a propietarios, con foto y ficha clínica resumida.",mascotas
+[PET] Crear tipos y schema Zod para mascotas,Task,Highest,"Interfaz Pet: id, clinic_id, owner_id, nombre, especie, raza, sexo, color, peso, fecha_nacimiento, microchip, foto. Schema de validación.",mascotas backend
+[PET] Crear servicio pets.service.ts,Task,Highest,"getPets, getPetById, getPetsByOwner, searchPets, createPet, updatePet, deletePet.",mascotas backend
+[PET] Server actions para mascotas,Task,Highest,"createPetAction, updatePetAction, deletePetAction con revalidatePath.",mascotas backend
+[PET] Upload de foto a Supabase Storage,Task,High,"Servicio uploadPetPhoto: subir imagen al bucket pet-photos, retornar URL pública. Validar tipo y tamaño máx 2MB.",mascotas backend
+[PET] Hook usePets y usePetsByOwner,Task,High,"Hook global y filtrado por owner_id con loading, error y refetch.",mascotas frontend
+[PET] Formulario PetForm con selector de propietario,Task,Highest,"Campos: nombre, especie (select), raza, sexo, color, peso, fecha nacimiento, microchip. Selector de propietario con búsqueda.",mascotas frontend
+[PET] Upload de foto en PetForm,Task,High,"Input de archivo con preview de imagen. Subir a Storage al guardar. Mostrar foto actual al editar.",mascotas frontend
+[PET] Cálculo automático de edad,Task,Medium,"Función calcPetAge(fecha_nacimiento): retorna 'X años Y meses' o 'X meses' si es cachorro.",mascotas frontend
+[PET] Tabla PetsTable con filtros,Task,High,"Columnas: foto, nombre, especie, raza, propietario, edad, acciones. Filtro por especie y búsqueda.",mascotas frontend
+[PET] Dialog crear/editar mascota,Task,High,"PetDialog reutilizable. Al crear desde /clients/[id] pre-llena owner_id.",mascotas frontend
+[PET] Dialog confirmar eliminación de mascota,Task,Medium,"Advertencia de eliminación de historial clínico, vacunas y hospitalizaciones asociadas.",mascotas frontend
+[PET] Vista detalle /pets/[id],Task,Highest,"PetDetailView: foto, ficha completa, propietario (con enlace), resumen últimas 3 consultas, vacunas vigentes, estado hospitalización, botones: nueva cita, nueva consulta, vacunar.",mascotas frontend
+[PET] Exportación Excel de mascotas,Task,Medium,"Exportar con headers: Nombre, Especie, Raza, Propietario, Microchip, Edad, Fecha registro.",mascotas frontend
+[PET] Tests unitarios mascotas,Task,Low,"Tests para schema y función calcPetAge.",mascotas testing
+[EPIC] Expediente Clínico Digital,Epic,Highest,"Historia clínica completa: consultas cronológicas, adjuntos (imágenes, PDF, exámenes, radiografías). Módulo principal del sistema.",historia-clinica
+[HC] Crear tipos y schema para historia clínica,Task,Highest,"Interfaz MedicalRecord y MedicalRecordAttachment. Schema con motivo, síntomas, diagnóstico, tratamiento, observaciones.",historia-clinica backend
+[HC] Crear servicio medical-records.service.ts,Task,Highest,"getMedicalRecordsByPet, getMedicalRecordsByVet, getMedicalRecordsByOwner, getMedicalRecordsByDateRange, getById, create, update, delete.",historia-clinica backend
+[HC] Server actions historia clínica,Task,Highest,"createMedicalRecordAction, updateMedicalRecordAction, deleteMedicalRecordAction.",historia-clinica backend
+[HC] Servicio de adjuntos con Supabase Storage,Task,High,"uploadAttachment: validar tipo (imagen/PDF) y tamaño. Guardar en bucket medical-records. deleteAttachment elimina de Storage y BD.",historia-clinica backend
+[HC] Formulario MedicalRecordForm,Task,Highest,"Campos: motivo de consulta, síntomas, diagnóstico, tratamiento, observaciones. Textareas con contador de caracteres.",historia-clinica frontend
+[HC] Componente AttachmentUploader,Task,High,"Drag & drop de archivos. Preview de imágenes. Lista de adjuntos con nombre, tipo, botón eliminar. Soporta: JPG, PNG, PDF.",historia-clinica frontend
+[HC] Vista cronológica del historial,Task,Highest,"MedicalRecordTimeline: cards ordenadas por fecha descendente. Cada card: fecha, veterinario, motivo, diagnóstico resumido, ícono de adjuntos.",historia-clinica frontend
+[HC] Dialog detalle de consulta,Task,High,"Ver todos los campos de la consulta, galería de adjuntos con preview, botón descargar cada archivo.",historia-clinica frontend
+[HC] Dialog crear/editar consulta,Task,High,"MedicalRecordDialog con formulario y AttachmentUploader integrados en un solo modal.",historia-clinica frontend
+[HC] Búsqueda y filtros en historial,Task,High,"Filtrar por veterinario, rango de fechas, diagnóstico (texto libre). Buscar en todas las historias desde /medical-records.",historia-clinica frontend
+[HC] Flujo cita atendida → crear consulta,Task,Highest,"Desde cita con estado 'atendida', botón 'Registrar consulta' pre-llena pet_id y veterinarian_id. Al guardar historia actualiza estado de la cita.",historia-clinica flujo
+[HC] Exportación Excel historial clínico,Task,High,"Exportar por mascota, por veterinario, por propietario o por rango de fechas. Headers: Mascota, Fecha, Veterinario, Motivo, Diagnóstico, Tratamiento.",historia-clinica frontend
+[HC] Tests unitarios historia clínica,Task,Low,"Tests para schema y validación de adjuntos permitidos.",historia-clinica testing
+[EPIC] Recetas Médicas en PDF,Epic,High,"Generación de recetas médicas digitales con plantilla profesional, descarga e impresión en PDF.",recetas
+[RX] Crear tipos y schema para recetas,Task,High,"Interfaz Prescription con campos: record_id, pet_id, vet_id, fecha, items (medicamento, dosis, frecuencia, duración, indicaciones).",recetas backend
+[RX] Crear tabla prescriptions en Supabase,Task,High,"Tabla prescriptions y prescription_items con clinic_id, relaciones a medical_records y profiles. RLS habilitado.",recetas backend
+[RX] Crear servicio prescriptions.service.ts,Task,High,"getPrescriptionsByPet, getPrescriptionById, createPrescription con items, deletePrescription.",recetas backend
+[RX] Server actions para recetas,Task,High,"createPrescriptionAction, deletePrescriptionAction con revalidatePath.",recetas backend
+[RX] Formulario PrescriptionForm con items dinámicos,Task,High,"Lista dinámica de medicamentos: nombre del producto, dosis, frecuencia (ej: cada 8h), duración, indicaciones especiales. Botón agregar/eliminar ítem.",recetas frontend
+[RX] Selector de medicamentos desde inventario,Task,Medium,"Al escribir nombre del producto busca en inventario y pre-llena. Permite escribir manualmente si no está en stock.",recetas frontend
+[RX] Template PDF de receta médica,Task,Highest,"Diseño profesional de receta: encabezado con datos de la clínica, fecha, datos del paciente (nombre, especie, raza, peso), datos del veterinario, tabla de medicamentos, pie con firma y sello.",recetas frontend
+[RX] Generación y descarga de PDF,Task,Highest,"Usar @react-pdf/renderer o html2pdf.js para generar el PDF. Botón 'Descargar receta' y botón 'Imprimir'.",recetas frontend
+[RX] Integrar receta en historia clínica,Task,High,"Desde el detalle de una consulta, botón 'Generar receta' abre PrescriptionForm con record_id pre-llenado.",recetas flujo
+[RX] Lista de recetas por mascota,Task,Medium,"Sección en PetDetailView: historial de recetas con fecha, veterinario, ícono descargar PDF.",recetas frontend
+[RX] Tests unitarios recetas,Task,Low,"Tests para schema de receta: validar que items tenga al menos 1 elemento.",recetas testing
+[EPIC] Control de Vacunas y Desparasitaciones,Epic,High,"Registro de vacunas y desparasitaciones por mascota, alertas de vencimiento y panel global.",vacunas
+[VAC] Crear tipos y schema para vacunas,Task,High,"Interfaz Vaccine: id, clinic_id, pet_id, tipo (vacuna/desparasitación), nombre, fecha_aplicacion, proxima_aplicacion, lote, veterinario.",vacunas backend
+[VAC] Actualizar tabla vaccines en Supabase,Task,High,"Agregar columna tipo (enum: vacuna/desparasitacion) y lote a la tabla existente.",vacunas backend
+[VAC] Crear servicio vaccines.service.ts,Task,High,"getVaccinesByPet, getUpcomingVaccines, getExpiredVaccines, getUpcomingDeworming, create, update, delete.",vacunas backend
+[VAC] Server actions para vacunas,Task,High,"createVaccineAction, updateVaccineAction, deleteVaccineAction.",vacunas backend
+[VAC] Función getVaccineAlerts,Task,High,"Retorna vacunas Y desparasitaciones que vencen en 7 días o ya vencidas. Agrupa por tipo.",vacunas backend
+[VAC] Formulario VaccineForm,Task,High,"Campos: tipo (toggle vacuna/desparasitación), nombre del producto, fecha aplicación, próxima aplicación, lote. Datepicker con validación de fechas.",vacunas frontend
+[VAC] Lista de vacunas por mascota,Task,High,"VaccineList separada en dos tabs: Vacunas | Desparasitaciones. Badges: vigente=verde, por vencer=amarillo, vencida=rojo.",vacunas frontend
+[VAC] Panel global de próximas aplicaciones,Task,Medium,"Vista /vaccines: todas las vacunas y desparasitaciones próximas a vencer con filtro por tipo y especie.",vacunas frontend
+[VAC] Exportación Excel vacunas,Task,Medium,"Exportar con headers: Mascota, Propietario, Tipo, Producto, Fecha aplicación, Próxima, Estado.",vacunas frontend
+[VAC] Integrar alertas de vacunas en Dashboard,Task,Medium,"Reemplazar mock de vacunas en Dashboard con datos reales: próximas 7 días.",vacunas frontend
+[VAC] Tests unitarios vacunas,Task,Low,"Tests para schema y función de cálculo de estado: vigente/por vencer/vencida.",vacunas testing
+[EPIC] Calendario de Citas,Epic,Highest,"Calendario interactivo con FullCalendar para asignación, visualización y gestión de citas.",citas
+[CAL] Crear tipos y schema para citas,Task,Highest,"Interfaz Appointment: pet_id, veterinarian_id, fecha_hora, motivo, estado (pendiente/confirmada/atendida/cancelada).",citas backend
+[CAL] Crear servicio appointments.service.ts,Task,Highest,"getAppointments, getAppointmentsByDate, getAppointmentsByPet, getAppointmentsByVet, create, update, updateStatus, delete.",citas backend
+[CAL] Validación de disponibilidad de horario,Task,High,"Función checkAvailability: verifica que el veterinario no tenga otra cita en el mismo horario.",citas backend
+[CAL] Server actions para citas,Task,Highest,"createAppointmentAction, updateAppointmentAction, updateStatusAction, deleteAppointmentAction.",citas backend
+[CAL] Vista calendario mensual con FullCalendar,Task,Highest,"AppointmentCalendar: vista month con eventos coloreados por estado. Clic en día para ver lista de citas.",citas frontend
+[CAL] Vista semanal y diaria,Task,High,"Vistas week y day en FullCalendar. Mostrar bloques de tiempo por veterinario.",citas frontend
+[CAL] Click en evento para ver detalle de cita,Task,High,"Popover o drawer al hacer clic en evento: datos completos, botones de acción de estado.",citas frontend
+[CAL] Formulario AppointmentForm,Task,Highest,"Campos: mascota (búsqueda), propietario (auto-fill desde mascota), veterinario (select), fecha, hora, motivo. Validación disponibilidad.",citas frontend
+[CAL] Dialog crear cita desde calendario,Task,High,"Al clic en espacio vacío del calendario abre AppointmentDialog con fecha pre-llenada.",citas frontend
+[CAL] Vista lista de citas con filtros,Task,High,"AppointmentsList: filtros por estado, veterinario, fecha. Paginación. Toggle entre lista y calendario.",citas frontend
+[CAL] Cambio rápido de estado de cita,Task,High,"Botones de acción: Confirmar, Marcar como atendida, Cancelar. Confirmación antes de cancelar.",citas frontend
+[CAL] Badge de estado coloreado,Task,Medium,"AppointmentStatusBadge: pendiente=gris, confirmada=azul, atendida=verde, cancelada=rojo.",citas frontend
+[CAL] Botón nueva cita desde ficha de mascota,Task,Medium,"En PetDetailView botón 'Agendar cita' abre AppointmentDialog con pet_id pre-llenado.",citas frontend
+[CAL] Exportación Excel de citas,Task,Medium,"Exportar con headers: Mascota, Propietario, Veterinario, Fecha, Hora, Motivo, Estado.",citas frontend
+[CAL] Tests unitarios citas,Task,Low,"Tests para schema y función checkAvailability.",citas testing
+[EPIC] Notificaciones de Recordatorio de Citas,Epic,High,"Sistema de recordatorios automáticos de citas por email usando Supabase Edge Functions.",notificaciones
+[NOT] Diseñar flujo de notificaciones,Task,High,"Definir: qué recordatorios enviar (24h antes, 2h antes), por qué canal (email), qué datos incluir.",notificaciones backend
+[NOT] Crear tabla notification_logs en Supabase,Task,High,"Tabla: id, clinic_id, appointment_id, tipo, canal, enviado_en, estado (enviado/fallido).",notificaciones backend
+[NOT] Supabase Edge Function: send-reminder,Task,Highest,"Edge Function que consulta citas de mañana, genera email personalizado (mascota, hora, veterinario, dirección) y envía vía Resend o SendGrid.",notificaciones backend
+[NOT] Configurar Supabase pg_cron,Task,High,"Programar cron job en Supabase que ejecuta la Edge Function cada día a las 9am y cada mañana a las 8am para recordatorios de 2h.",notificaciones backend
+[NOT] Template de email de recordatorio,Task,High,"Diseño HTML del email: nombre del propietario, nombre de la mascota, fecha y hora, veterinario asignado, dirección de la clínica, botón cancelar/confirmar.",notificaciones frontend
+[NOT] Configurar proveedor de email (Resend),Task,High,"Crear cuenta en Resend.com, verificar dominio, obtener API key, configurar en Supabase Secrets.",notificaciones infra
+[NOT] Historial de notificaciones enviadas,Task,Medium,"Vista en admin: tabla de logs de notificaciones con estado enviado/fallido, fecha, destinatario.",notificaciones frontend
+[NOT] Opción opt-out para propietarios,Task,Medium,"Campo notificaciones_activas en tabla clients. Si es false no enviar recordatorios. Toggle en edición de cliente.",notificaciones frontend
+[NOT] Tests de Edge Function,Task,Medium,"Tests unitarios de la lógica de filtrado de citas y generación del contenido del email.",notificaciones testing
+[EPIC] Control de Inventario,Epic,High,"Gestión de insumos, medicamentos y productos con alertas de stock bajo y vencimiento.",inventario
+[INV] Crear tipos y schema para inventario,Task,High,"Interfaz InventoryItem: nombre, categoría (insumo/medicamento/producto), stock, unidad, precio, fecha_vencimiento, stock_minimo.",inventario backend
+[INV] Crear tabla inventory actualizada en Supabase,Task,High,"Agregar columna stock_minimo (default 5) y unidad a la tabla inventory.",inventario backend
+[INV] Crear servicio inventory.service.ts,Task,High,"getInventory, getLowStockItems (stock <= stock_minimo), getExpiringItems (vence en 30 días), create, update, delete, adjustStock.",inventario backend
+[INV] Server actions para inventario,Task,High,"createInventoryAction, updateInventoryAction, deleteInventoryAction, adjustStockAction.",inventario backend
+[INV] Función de alertas de stock e inventario,Task,High,"getInventoryAlerts: retorna items con stock bajo y items por vencer en 30 días. Usado en Dashboard y panel de alertas.",inventario backend
+[INV] Formulario InventoryForm,Task,Medium,"Campos: nombre, categoría (select), stock actual, unidad (unidades/ml/mg/cajas), precio, stock mínimo, fecha vencimiento.",inventario frontend
+[INV] Tabla InventoryTable con filtros,Task,High,"Filtro por categoría, búsqueda por nombre, ordenar por stock y vencimiento. Fila con color si hay alerta.",inventario frontend
+[INV] Badges de estado en tabla,Task,Medium,"Stock bajo=rojo, por vencer=amarillo, sin stock=negro, OK=verde. Columna visual de estado.",inventario frontend
+[INV] Panel de alertas de inventario,Task,High,"InventoryAlertsPanel: dos secciones — Stock bajo (con botón ajustar) y Por vencer. Accesible desde Dashboard.",inventario frontend
+[INV] Modal de ajuste rápido de stock,Task,Medium,"AdjustStockModal: input de cantidad a agregar o restar con motivo. Actualiza stock y registra movimiento.",inventario frontend
+[INV] Vincular inventario con recetas y facturas,Task,High,"Al agregar medicamento en PrescriptionForm o InvoiceItem busca en inventario. Al facturar descuenta stock automáticamente.",inventario flujo
+[INV] Exportación Excel de inventario,Task,Medium,"Exportar con headers: Nombre, Categoría, Stock, Unidad, Precio, Vencimiento, Estado.",inventario frontend
+[INV] Tests unitarios inventario,Task,Low,"Tests para funciones de alertas de stock y vencimiento.",inventario testing
+[EPIC] Reportes Financieros y Gráficos,Epic,High,"Dashboard analítico con gráficas Recharts: ingresos, citas, mascotas, vacunas, inventario. Exportación Excel por reporte.",reportes
+[REP] Servicio de agregación reports.service.ts,Task,High,"Funciones con queries agregadas a Supabase: ingresos por mes, citas por mes, mascotas por especie, vacunas aplicadas, top servicios.",reportes backend
+[REP] Reporte de ingresos por mes,Task,Highest,"Gráfica de barras Recharts: ingresos mensuales del año actual vs año anterior. Tooltip con total y comparativo.",reportes frontend
+[REP] Reporte de citas por mes,Task,High,"Gráfica de líneas: número de citas por mes. Líneas separadas por estado (atendidas vs canceladas).",reportes frontend
+[REP] Reporte de mascotas por especie,Task,High,"Gráfica de torta (PieChart): distribución porcentual por especie. Leyenda con cantidad.",reportes frontend
+[REP] Reporte de vacunas y desparasitaciones,Task,Medium,"Gráfica de barras agrupadas: vacunas vs desparasitaciones aplicadas por mes.",reportes frontend
+[REP] Reporte de inventario crítico,Task,Medium,"Tabla de items con stock bajo o por vencer. Exportable a Excel directamente.",reportes frontend
+[REP] Reporte de hospitalizaciones,Task,Medium,"Gráfica de barras: ingresos hospitalarios vs altas por mes. Promedio de días internados.",reportes frontend
+[REP] KPIs del período,Task,High,"Cards con métricas: total facturado en el período, ticket promedio, citas atendidas, nuevos pacientes, tasa de cancelación.",reportes frontend
+[REP] Filtros globales de período,Task,High,"Selector de rango de fechas y veterinario que actualiza todos los gráficos simultáneamente.",reportes frontend
+[REP] Exportación Excel por reporte,Task,Medium,"Botón exportar en cada gráfico: descarga los datos del período seleccionado con headers profesionales.",reportes frontend
+[REP] Conectar Dashboard principal con datos reales,Task,High,"Reemplazar todos los mocks del Dashboard (Fase 2) con datos reales de Supabase.",reportes frontend
+[REP] Tests unitarios reportes,Task,Low,"Tests para funciones de agregación con datos mock.",reportes testing
+[EPIC] Facturación,Epic,High,"Generación de facturas por servicios y productos con descuento de inventario y exportación PDF.",facturacion
+[FAC] Crear tipos y schema para facturación,Task,High,"Interfaz Invoice e InvoiceItem. Schema con owner_id, total, fecha, estado (pagada/pendiente/anulada).",facturacion backend
+[FAC] Crear servicio invoices.service.ts,Task,High,"getInvoices, getInvoiceById, getInvoicesByOwner, createInvoiceWithItems, updateStatus, deleteInvoice.",facturacion backend
+[FAC] Server action createInvoiceAction,Task,High,"Crear factura con items en transacción. Descontar stock de inventario por cada producto usado.",facturacion backend
+[FAC] Formulario InvoiceForm con items dinámicos,Task,Highest,"Selector de propietario, tabla de ítems con agregar/eliminar filas, búsqueda de productos en inventario, cálculo automático de total.",facturacion frontend
+[FAC] Generación de PDF de factura,Task,High,"Template profesional: logo clínica, datos clínica, datos cliente, tabla de servicios y productos, subtotal, total. Descarga e impresión.",facturacion frontend
+[FAC] Vista detalle de factura,Task,High,"InvoiceDetailView: todos los datos, tabla de ítems, botón descargar PDF, cambiar estado (pagada/anulada).",facturacion frontend
+[FAC] Historial de facturas por propietario,Task,Medium,"Sección en ClientDetailView: lista de facturas con fecha, total, estado, botón ver/descargar.",facturacion frontend
+[FAC] Flujo cita atendida → generar factura,Task,High,"Desde cita atendida botón 'Generar factura' pre-llena owner_id, fecha y referencia a la consulta.",facturacion flujo
+[FAC] Exportación Excel facturación,Task,Medium,"Exportar con headers: Factura N°, Cliente, Fecha, Servicios, Total, Estado.",facturacion frontend
+[FAC] Tests unitarios facturación,Task,Low,"Tests para schema y cálculo de total con múltiples ítems.",facturacion testing
+[EPIC] Flujos Completos E2E,Epic,Highest,"Escenarios de negocio completos que cruzan múltiples módulos del sistema.",flujo
+[FLUJO] Registro de paciente nuevo completo,Task,Highest,"Flujo: 1-Crear propietario, 2-Crear mascota vinculada, 3-Subir foto de mascota, 4-Registrar vacunas iniciales, 5-Agendar primera cita. Verificar consistencia de datos en todo el recorrido.",flujo e2e
+[FLUJO] Consulta completa con receta y factura,Task,Highest,"Flujo: 1-Confirmar cita pendiente, 2-Atender cita, 3-Crear historia clínica, 4-Adjuntar examen PDF, 5-Generar receta médica, 6-Descargar receta PDF, 7-Generar factura con medicamentos, 8-Descargar factura PDF.",flujo e2e
+[FLUJO] Vacunación y desparasitación,Task,High,"Flujo: 1-Seleccionar mascota, 2-Registrar vacuna aplicada con lote, 3-Registrar desparasitación, 4-Definir próximas fechas, 5-Verificar alerta en Dashboard en período de vencimiento.",flujo e2e
+[FLUJO] Hospitalización alta y facturación,Task,High,"Flujo: 1-Ingresar mascota a hospitalización, 2-Agregar evolución diaria día 1, 3-Agregar evolución día 2, 4-Verificar en Dashboard hospitalizados, 5-Dar de alta, 6-Generar factura de internación.",flujo e2e
+[FLUJO] Control de stock con inventario,Task,High,"Flujo: 1-Agregar medicamento al inventario con stock mínimo, 2-Ver alerta de stock al bajar el límite, 3-Usar medicamento en receta, 4-Descontar stock desde factura, 5-Ajustar stock manualmente.",flujo e2e
+[FLUJO] Recordatorio automático de cita,Task,High,"Flujo: 1-Crear cita para mañana, 2-Verificar que Edge Function detecta la cita, 3-Confirmar que email llega al propietario, 4-Verificar log en tabla notification_logs.",flujo e2e
+[FLUJO] Cierre de mes con reportes,Task,Medium,"Flujo: 1-Seleccionar período del mes, 2-Ver KPIs del mes, 3-Ver gráfica de ingresos, 4-Exportar Excel de citas del mes, 5-Exportar Excel de facturas, 6-Ver reporte de vacunas vencidas.",flujo e2e
+[EPIC] Infraestructura y Deploy,Epic,High,"CI/CD, seguridad, performance y puesta en producción.",infra
+[INFRA] Configurar GitHub Actions CI pipeline,Task,High,"Workflow en cada PR: yarn lint, yarn type-check, yarn test. Bloquear merge si falla alguno.",infra ci-cd
+[INFRA] Configurar Vercel para producción,Task,High,"Conectar repositorio con Vercel. Configurar env vars de producción. Deploy automático en merge a main.",infra deploy
+[INFRA] Dominio y certificado SSL,Task,Medium,"Configurar dominio personalizado en Vercel. Verificar HTTPS.",infra deploy
+[INFRA] Revisar todas las políticas RLS,Task,Highest,"Verificar que cada tabla tenga política de aislamiento por clinic_id. Probar con usuario de otra clínica que no pueda ver datos.",infra seguridad
+[INFRA] Políticas de acceso en Storage,Task,High,"Bucket medical-records y pet-photos: solo usuarios autenticados de la misma clínica pueden leer y escribir.",infra seguridad
+[INFRA] Agregar índices a Supabase,Task,Medium,"Índices en: clinic_id (todas las tablas), pet_id, owner_id, fecha_hora (appointments), created_at. Mejorar performance de queries.",infra performance
+[INFRA] ErrorBoundary global y páginas de error,Task,Medium,"ErrorBoundary React global. Páginas personalizadas: not-found.tsx y error.tsx con botón volver.",infra ux
+[INFRA] Loading states con Skeleton en todos los módulos,Task,Low,"Skeleton loaders consistentes en tablas, formularios y vistas de detalle. Suspense boundaries en Server Components.",infra ux
+[INFRA] Revisión responsive en tablet y móvil,Task,Low,"Revisar y ajustar vistas críticas: dashboard, tablas, formularios, calendario en pantallas < 768px.",infra ux
+[INFRA] Documentar variables de entorno,Task,Medium,"README actualizado con todas las env vars requeridas, instrucciones de Supabase Storage, pg_cron y Resend.",infra docs
